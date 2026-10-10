@@ -8,7 +8,6 @@ on:
     tags: ['v*']
   workflow_dispatch:
 
-# Os comandos do electron-builder rodam no bash: o PowerShell quebra "-c.win.x=y" no ponto.
 permissions:
   contents: write
 
@@ -26,7 +25,7 @@ jobs:
 
       - name: Build installer
         shell: bash
-        run: npx electron-builder --win nsis --publish never -c.win.signAndEditExecutable=true
+        run: npx electron-builder --win nsis --publish never
 
       # Teste: instala em silêncio, confere se o Vulpi.exe e o desinstalador existem, e desinstala.
       - name: Test installer
@@ -43,6 +42,6 @@ jobs:
 
       - name: Publish release
         shell: bash
-        run: npx electron-builder --win nsis --publish always -c.win.signAndEditExecutable=true
+        run: npx electron-builder --win nsis --publish always
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
