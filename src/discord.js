@@ -99,7 +99,7 @@ class DiscordPresence {
 }
 
 // Atividade "Ouvindo" a partir do estado do player (null = some do perfil, ex.: pausado).
-// lang: 'pt' ou 'en' (texto do botão).
+// lang: 'pt', 'en' ou 'de' (texto do botão).
 function activityFor(s, lang = 'en') {
   if (!s?.videoId || !s.playing) return null;
   const now = Date.now();
@@ -115,7 +115,7 @@ function activityFor(s, lang = 'en') {
       large_image: /^https:\/\//.test(s.thumb) ? s.thumb : undefined,
       large_text: cut(s.title),
     },
-    buttons: [{ label: lang === 'pt' ? 'Ouvir no YouTube Music' : 'Listen on YouTube Music', url: `https://music.youtube.com/watch?v=${encodeURIComponent(s.videoId)}` }],
+    buttons: [{ label: { pt: 'Ouvir no YouTube Music', de: 'Auf YouTube Music anhören' }[lang] || 'Listen on YouTube Music', url: `https://music.youtube.com/watch?v=${encodeURIComponent(s.videoId)}` }],
   };
 }
 

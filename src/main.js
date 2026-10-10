@@ -32,7 +32,7 @@ const hidden = process.argv.includes('--hidden'); // aberto com o Windows: come�
 const discord = new DiscordPresence((...a) => log(...a));
 
 // Idioma: o da interface (mandado pela página) ou, antes disso, o do Windows.
-const lang = () => player.lang || (/^pt/i.test(app.getLocale()) ? 'pt' : 'en');
+const lang = () => player.lang || (/^pt/i.test(app.getLocale()) ? 'pt' : /^de/i.test(app.getLocale()) ? 'de' : 'en');
 const EN = {
   'Entre na sua conta do YouTube Music': 'Sign in to your YouTube Music account',
   'Vai abrir uma janela do Edge. Clique em "Fazer login", entre com a sua conta e depois feche a janela. O Vulpi abre de novo, já logado.':
@@ -65,7 +65,39 @@ const EN = {
   'Mostrar Vulpi': 'Show Vulpi',
   'Fechar': 'Quit',
 };
-const tr = (s) => (lang() === 'pt' ? s : EN[s] || s);
+const DE = {
+  'Entre na sua conta do YouTube Music': 'Melde dich bei deinem YouTube-Music-Konto an',
+  'Vai abrir uma janela do Edge. Clique em "Fazer login", entre com a sua conta e depois feche a janela. O Vulpi abre de novo, já logado.':
+    'Ein Edge-Fenster öffnet sich. Klicke auf „Anmelden“, melde dich mit deinem Konto an und schließe dann das Fenster. Vulpi öffnet sich danach angemeldet wieder.',
+  'Fazer login': 'Anmelden',
+  'Sair': 'Beenden',
+  'O Vulpi precisa do Microsoft Edge, que não foi encontrado. Instale o Edge em microsoft.com/edge e abra o Vulpi de novo.':
+    'Vulpi benötigt Microsoft Edge, das nicht gefunden wurde. Installiere Edge von microsoft.com/edge und öffne Vulpi erneut.',
+  'Nada tocando': 'Nichts wird abgespielt',
+  'Pausar': 'Pause',
+  'Tocar': 'Abspielen',
+  'Próxima': 'Weiter',
+  'Anterior': 'Zurück',
+  'Curtir': 'Mag ich',
+  'Descurtir': 'Mag ich nicht mehr',
+  'Mini player': 'Miniplayer',
+  'Fechar mini player': 'Miniplayer schließen',
+  'Modo foco': 'Fokusmodus',
+  'Timer de sono': 'Sleep-Timer',
+  'Desligado': 'Aus',
+  '15 minutos': '15 Minuten',
+  '30 minutos': '30 Minuten',
+  '60 minutos': '60 Minuten',
+  'Fim da música': 'Songende',
+  'Configurações': 'Einstellungen',
+  'Notificações ao trocar de música': 'Bei Songwechsel benachrichtigen',
+  'Mostrar no Discord': 'Auf Discord anzeigen',
+  'Abrir com o Windows': 'Mit Windows starten',
+  'Abrir arquivo de configurações': 'Einstellungsdatei öffnen',
+  'Mostrar Vulpi': 'Vulpi anzeigen',
+  'Fechar': 'Beenden',
+};
+const tr = (s) => (lang() === 'pt' ? s : (lang() === 'de' ? DE : EN)[s] || s);
 
 // ---------- Registro e configurações ----------
 // Registro simples em %APPDATA%\Vulpi\vulpi.log, para investigar problemas.
@@ -233,7 +265,7 @@ function onState(s) {
     videoId: str(s.videoId), title: str(s.title), artist: str(s.artist), thumb: safeImg(s.thumb) ? s.thumb : '',
     playing: !!s.playing, time: +s.time || 0, duration: +s.duration || 0, liked: !!s.liked,
     volume: +s.volume || 0, light: !!s.light, focused: !!s.focused, sleep: str(s.sleep),
-    lang: s.lang === 'pt' ? 'pt' : 'en',
+    lang: ['pt', 'de'].includes(s.lang) ? s.lang : 'en',
   };
   if (!prev.at) log('ponte: primeiro estado recebido', player.videoId || '(nada tocando)');
   const changed = player.videoId !== prev.videoId;

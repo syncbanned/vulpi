@@ -1,7 +1,7 @@
 {
   "name": "vulpi",
   "productName": "Vulpi",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Minimal desktop player for YouTube Music on Windows. Not affiliated with YouTube/Google.",
   "author": "syncbanned",
   "main": "src/main.js",
@@ -53,7 +53,8 @@
       "multiLanguageInstaller": true,
       "installerLanguages": [
         "en_US",
-        "pt_BR"
+        "pt_BR",
+        "de_DE"
       ],
       "deleteAppDataOnUninstall": false,
       "artifactName": "Vulpi-Setup-${version}.${ext}"

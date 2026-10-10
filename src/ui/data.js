@@ -13,11 +13,11 @@ async function authHeader() {
   return { Authorization: `SAPISIDHASH ${ts}_${hex}` };
 }
 
-// Contexto do site; em inglês, pede os dados (títulos das seções etc.) em inglês também.
+// Contexto do site; em inglês ou alemão, pede os dados (títulos das seções etc.) nesse idioma também.
 function contextFor() {
   const ctx = window.ytcfg.get('INNERTUBE_CONTEXT');
-  if (LANG !== 'en' || /^en/i.test(ctx?.client?.hl || '')) return ctx;
-  return { ...ctx, client: { ...ctx.client, hl: 'en' } };
+  if (LANG === 'pt' || new RegExp('^' + LANG, 'i').test(ctx?.client?.hl || '')) return ctx;
+  return { ...ctx, client: { ...ctx.client, hl: LANG } };
 }
 
 async function innertube(endpoint, body) {

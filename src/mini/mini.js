@@ -7,16 +7,17 @@ let playing = null;
 let thumb = '';
 let base = { time: 0, duration: 0, at: 0 };
 
-// Textos em português ou inglês (o idioma vem junto do estado).
+// Textos em português, inglês ou alemão (o idioma vem junto do estado).
 const TEXT = {
   pt: { idle: 'Nada tocando', prev: 'Anterior', play: 'Tocar/pausar', next: 'Próxima', like: 'Curtir', expand: 'Abrir o Vulpi', close: 'Fechar mini player' },
   en: { idle: 'Nothing playing', prev: 'Previous', play: 'Play/pause', next: 'Next', like: 'Like', expand: 'Open Vulpi', close: 'Close mini player' },
+  de: { idle: 'Nichts wird abgespielt', prev: 'Zurück', play: 'Abspielen/Pause', next: 'Weiter', like: 'Mag ich', expand: 'Vulpi öffnen', close: 'Miniplayer schließen' },
 };
 let lang = '';
 
 window.mini.onState((s) => {
   if (s.lang !== lang) {
-    lang = s.lang === 'pt' ? 'pt' : 'en';
+    lang = TEXT[s.lang] ? s.lang : 'en';
     const tx = TEXT[lang];
     document.documentElement.lang = lang;
     for (const id of ['prev', 'play', 'next', 'like', 'expand', 'close']) $(id).title = tx[id];

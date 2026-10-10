@@ -378,7 +378,7 @@ function trackStats(s, prev) {
 }
 
 const hours = (secs) => (secs >= 3600
-  ? `${(secs / 3600).toLocaleString(LANG === 'pt' ? 'pt-BR' : 'en-US', { maximumFractionDigits: 1 })} h`
+  ? `${(secs / 3600).toLocaleString(LOCALE, { maximumFractionDigits: 1 })} h`
   : `${Math.round(secs / 60)} min`);
 
 async function screenStats() {
@@ -388,7 +388,7 @@ async function screenStats() {
   const days = [...Array(7)].map((_, i) => {
     const d = new Date(Date.now() - (6 - i) * 86400000);
     const key = d.toISOString().slice(0, 10);
-    return { label: d.toLocaleDateString(LANG === 'pt' ? 'pt-BR' : 'en-US', { weekday: 'short' }).replace('.', ''), secs: stats.days[key] || 0 };
+    return { label: d.toLocaleDateString(LOCALE, { weekday: 'short' }).replace('.', ''), secs: stats.days[key] || 0 };
   });
   const week = days.reduce((a, d) => a + d.secs, 0);
   const max = Math.max(1, ...days.map((d) => d.secs));

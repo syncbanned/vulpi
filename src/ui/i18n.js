@@ -1,12 +1,13 @@
-// Idioma da interface: português se o sistema estiver em português, senão inglês.
+// Idioma da interface: português, inglês ou alemão, conforme o sistema (outros caem no inglês).
 // Dá para trocar no menu do avatar (fica salvo). Os textos ficam escritos em português no código
 // e t() devolve a tradução: t('Início') -> 'Home'. {0}, {1}... são trocados pelos argumentos.
 const LANG = (() => {
   try {
     const saved = localStorage.getItem('vulpi-lang');
-    if (saved === 'pt' || saved === 'en') return saved;
+    if (saved === 'pt' || saved === 'en' || saved === 'de') return saved;
   } catch {}
-  return /^pt\b/i.test(navigator.language || '') ? 'pt' : 'en';
+  const nav = navigator.language || '';
+  return /^pt\b/i.test(nav) ? 'pt' : /^de\b/i.test(nav) ? 'de' : 'en';
 })();
 
 const EN = {
@@ -102,14 +103,110 @@ const EN = {
   'Recarregar': 'Reload',
 };
 
+const DE = {
+  'Início': 'Start',
+  'Explorar': 'Entdecken',
+  'Biblioteca': 'Bibliothek',
+  'Playlists': 'Playlists',
+  'Ver tudo': 'Alle anzeigen',
+  'Playlist em destaque': 'Empfohlene Playlist',
+  'Ouvir agora': 'Jetzt abspielen',
+  'Destaque {0}': 'Empfehlung {0}',
+  'Não deu para carregar agora.': 'Konnte gerade nicht geladen werden.',
+  'Tentar de novo': 'Erneut versuchen',
+  'Recentes': 'Zuletzt gehört',
+  'Suas playlists': 'Deine Playlists',
+  'Álbum': 'Album',
+  'Playlist': 'Playlist',
+  'Artista': 'Künstler',
+  'Músicas': 'Songs',
+  'Nada por aqui ainda.': 'Hier ist noch nichts.',
+  'Nada encontrado para "{0}".': 'Nichts gefunden für „{0}“.',
+  'Resultados': 'Ergebnisse',
+  'Tocar/pausar': 'Abspielen/Pause',
+  'Nada tocando': 'Nichts wird abgespielt',
+  'Nada tocando.': 'Nichts wird abgespielt.',
+  'Escolha uma música': 'Wähle einen Song',
+  'Curtir': 'Mag ich',
+  'Repetir': 'Wiederholen',
+  'Fila': 'Warteschlange',
+  'Aleatório': 'Zufallswiedergabe',
+  'Anterior': 'Zurück',
+  'Próxima': 'Weiter',
+  'Mini player': 'Miniplayer',
+  'Modo foco': 'Fokusmodus',
+  'Modo foco (F)': 'Fokusmodus (F)',
+  'Sair do modo foco (Esc)': 'Fokusmodus beenden (Esc)',
+  'Esconder painel': 'Seitenleiste ausblenden',
+  'Mostrar painel': 'Seitenleiste einblenden',
+  'Tocando agora': 'Läuft gerade',
+  'Letra': 'Songtext',
+  'A seguir': 'Als Nächstes',
+  'Fim da fila.': 'Ende der Warteschlange.',
+  'A fila está vazia.': 'Die Warteschlange ist leer.',
+  'Não deu para carregar a letra.': 'Songtext konnte nicht geladen werden.',
+  'Letra indisponível para esta música.': 'Für diesen Song ist kein Songtext verfügbar.',
+  'Esconde e pula as músicas desse artista': 'Blendet die Songs dieses Künstlers aus und überspringt sie',
+  'É IA? Bloquear artista': 'KI? Künstler blockieren',
+  'Esconder miniaturas': 'Vorschaubilder ausblenden',
+  'Mostrar miniaturas': 'Vorschaubilder anzeigen',
+  'Tema escuro': 'Dunkles Design',
+  'Tema claro': 'Helles Design',
+  'Trocar tema': 'Design wechseln',
+  'Voltar': 'Zurück',
+  'Conta': 'Konto',
+  'Fechar': 'Schließen',
+  'Menu (Ctrl+K)': 'Menü (Strg+K)',
+  'Buscar músicas, artistas, álbuns...': 'Songs, Künstler, Alben suchen …',
+  'Buscar e tocar, ou escolher uma ação...': 'Suchen und abspielen oder eine Aktion wählen …',
+  'Busca rápida': 'Schnellsuche',
+  'Estatísticas': 'Statistiken',
+  'Timer de sono': 'Sleep-Timer',
+  'Clique para trocar': 'Zum Ändern klicken',
+  'desligado': 'aus',
+  'fim da música': 'Songende',
+  'Timer de sono: {0}': 'Sleep-Timer: {0}',
+  'Timer de sono desligado': 'Sleep-Timer aus',
+  'Timer de sono: música pausada. Boa noite!': 'Sleep-Timer: Musik pausiert. Gute Nacht!',
+  'Cor da capa': 'Cover-Farbe',
+  'Visualizador': 'Visualizer',
+  'Não deu para ligar o visualizador.': 'Der Visualizer konnte nicht gestartet werden.',
+  'Idioma: Português': 'Sprache: Deutsch',
+  'Volume (role para ajustar)': 'Lautstärke (scrollen zum Anpassen)',
+  'Volume {0}% (role para ajustar)': 'Lautstärke {0} % (scrollen zum Anpassen)',
+  'Filtrar músicas de IA': 'KI-Musik filtern',
+  'Filtrar músicas feitas por IA': 'Mit KI erstellte Musik filtern',
+  'Filtro de IA ligado (clique para desligar)': 'KI-Filter an (zum Ausschalten klicken)',
+  'Filtro de IA ligado': 'KI-Filter an',
+  'Filtro de IA desligado': 'KI-Filter aus',
+  '"{0}" marcado como IA': '„{0}“ als KI markiert',
+  'Pulei uma música marcada como IA': 'Als KI markierten Song übersprungen',
+  '"{0}" adicionada a {1}': '„{0}“ zu {1} hinzugefügt',
+  'Não deu para adicionar a {0}': 'Konnte nicht zu {0} hinzugefügt werden',
+  'Ouça umas músicas e volte aqui. Os dados ficam só neste computador.': 'Hör ein paar Songs und komm wieder. Diese Daten bleiben nur auf diesem Computer.',
+  'Esta semana': 'Diese Woche',
+  'Total': 'Gesamt',
+  'Músicas diferentes': 'Verschiedene Songs',
+  'Últimos 7 dias': 'Letzte 7 Tage',
+  'Artistas mais ouvidos': 'Top-Künstler',
+  'Músicas mais ouvidas': 'Top-Songs',
+  'Algo deu errado ao abrir o Vulpi.': 'Beim Öffnen von Vulpi ist etwas schiefgelaufen.',
+  'Sem conexão com o YouTube Music.': 'Keine Verbindung zu YouTube Music.',
+  'Confira a internet e tente de novo.': 'Prüfe deine Internetverbindung und versuche es erneut.',
+  'Recarregar': 'Neu laden',
+};
+
+// Formato de números e datas do idioma.
+const LOCALE = { pt: 'pt-BR', en: 'en-US', de: 'de-DE' }[LANG];
+
 function t(s, ...args) {
-  let r = LANG === 'pt' ? s : (EN[s] ?? s);
+  let r = LANG === 'pt' ? s : ((LANG === 'de' ? DE : EN)[s] ?? s);
   args.forEach((v, i) => { r = r.split(`{${i}}`).join(String(v)); });
   return r;
 }
 
-// Troca o idioma e recarrega a interface.
+// Troca o idioma (português → inglês → alemão → português) e recarrega a interface.
 function switchLang() {
-  try { localStorage.setItem('vulpi-lang', LANG === 'pt' ? 'en' : 'pt'); } catch {}
+  try { localStorage.setItem('vulpi-lang', { pt: 'en', en: 'de', de: 'pt' }[LANG]); } catch {}
   location.reload();
 }

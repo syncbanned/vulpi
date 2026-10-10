@@ -34,7 +34,7 @@ plays in the official player.
   AI keywords in the title, and artists you block. Hidden songs stay in your playlists.
 - **Discord**: shows "Listening to Vulpi" on your profile, like Spotify.
 - **Open with Windows** (from the tray), already minimized.
-- English and Portuguese (follows Windows; switch in the avatar menu).
+- English, Portuguese and German (follows Windows; switch in the avatar menu).
 
 ## Requirements
 
@@ -99,4 +99,4 @@ Executar assim mesmo**.
 
 **Compilar:** `npm install`, `npm start`. Para instalar como programa: `npm run dist` e `npm run install-app`.
 
-O app segue o idioma do Windows (português ou inglês) e dá para trocar no menu do avatar.
+O app segue o idioma do Windows (português, inglês ou alemão) e dá para trocar no menu do avatar.
