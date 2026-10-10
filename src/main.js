@@ -64,6 +64,9 @@ const EN = {
   'Abrir arquivo de configurações': 'Open settings file',
   'Mostrar Vulpi': 'Show Vulpi',
   'Fechar': 'Quit',
+  'Atualização pronta': 'Update ready',
+  'A versão {0} do Vulpi foi baixada. Reinicie para atualizar.': 'Vulpi {0} has been downloaded. Restart to update.',
+  'Reiniciar para atualizar ({0})': 'Restart to update ({0})',
 };
 const DE = {
   'Entre na sua conta do YouTube Music': 'Melde dich bei deinem YouTube-Music-Konto an',
@@ -96,8 +99,15 @@ const DE = {
   'Abrir arquivo de configurações': 'Einstellungsdatei öffnen',
   'Mostrar Vulpi': 'Vulpi anzeigen',
   'Fechar': 'Beenden',
+  'Atualização pronta': 'Update bereit',
+  'A versão {0} do Vulpi foi baixada. Reinicie para atualizar.': 'Vulpi {0} wurde heruntergeladen. Starte neu, um zu aktualisieren.',
+  'Reiniciar para atualizar ({0})': 'Neu starten zum Aktualisieren ({0})',
 };
-const tr = (s) => (lang() === 'pt' ? s : (lang() === 'de' ? DE : EN)[s] || s);
+const tr = (s, ...args) => {
+  let r = lang() === 'pt' ? s : (lang() === 'de' ? DE : EN)[s] || s;
+  args.forEach((v, i) => { r = r.split(`{${i}}`).join(String(v)); });
+  return r;
+};
 
 // ---------- Registro e configurações ----------
 // Registro simples em %APPDATA%\Vulpi\vulpi.log, para investigar problemas.
@@ -360,6 +370,41 @@ function aiTagged(videoId) {
   return aiCache.get(videoId);
 }
 
+// ---------- Atualização automática ----------
+// Confere o GitHub Releases (o latest.yml que a compilação publica) ao abrir e a cada 6 horas.
+// Baixa em segundo plano; instala ao reiniciar pelo aviso/bandeja ou na próxima vez que o app fechar.
+// Só funciona no app instalado pelo instalador (ele traz o resources/app-update.yml).
+let updateReady = null; // versão baixada, esperando reiniciar
+function setupUpdates() {
+  if (!app.isPackaged || !fs.existsSync(path.join(process.resourcesPath, 'app-update.yml'))) return;
+  let autoUpdater;
+  try { ({ autoUpdater } = require('electron-updater')); } catch (e) { return log('atualização: módulo ausente', e); }
+  autoUpdater.autoDownload = true;
+  autoUpdater.autoInstallOnAppQuit = true;
+  autoUpdater.logger = { info: (m) => log('atualização:', m), warn: (m) => log('atualização:', m), error: (m) => log('atualização: erro', m), debug: () => {} };
+  autoUpdater.on('update-downloaded', (info) => {
+    updateReady = info.version;
+    updateTray();
+    if (Notification.isSupported()) {
+      const n = new Notification({
+        title: tr('Atualização pronta'),
+        body: tr('A versão {0} do Vulpi foi baixada. Reinicie para atualizar.', info.version),
+        icon: path.join(ASSETS, 'icon.png'),
+      });
+      n.on('click', restartToUpdate);
+      n.show();
+    }
+  });
+  autoUpdater.on('error', (e) => log('atualização: erro', e));
+  const check = () => autoUpdater.checkForUpdates().catch((e) => log('atualização: falhou', e));
+  setTimeout(check, 15000); // depois que o app abriu
+  setInterval(check, 6 * 60 * 60 * 1000);
+  restartToUpdate.run = () => { quitting = true; autoUpdater.quitAndInstall(true, true); };
+}
+function restartToUpdate() {
+  restartToUpdate.run?.();
+}
+
 // ---------- Mini player ----------
 function toggleMini() {
   if (mini) return mini.close();
@@ -413,6 +458,7 @@ function updateTray() {
   const sleepItem = (label, v) => ({ label, type: 'radio', checked: sleepOn === v, click: () => { sleepChoice = v; pageCmd('sleep', v); } });
   tray.setToolTip(has ? `Vulpi — ${p.title} · ${p.artist}`.slice(0, 127) : 'Vulpi');
   tray.setContextMenu(Menu.buildFromTemplate([
+    ...(updateReady ? [{ label: tr('Reiniciar para atualizar ({0})', updateReady), click: restartToUpdate }, { type: 'separator' }] : []),
     { label: has ? `♪  ${p.title}`.slice(0, 60) : tr('Nada tocando'), enabled: false },
     ...(has ? [{ label: `    ${p.artist}`.slice(0, 60), enabled: false }] : []),
     { type: 'separator' },
@@ -476,6 +522,7 @@ if (!app.requestSingleInstanceLock()) {
     log('início', process.argv.join(' '));
     createTray();
     start();
+    setupUpdates();
   });
 
   // O mini player é uma janela do Electron; fechar ele não fecha o app.

@@ -32,6 +32,9 @@ fs.copyFileSync(path.join(root, 'assets', 'icon.ico'), path.join(dest, 'icon.ico
 // do Windows bloqueia executáveis desconhecidos. O electron.exe original (o mesmo de `npm start`)
 // é conhecido e roda normalmente: usamos ele como Vulpi.exe (ele carrega o app de resources/app.asar).
 fs.copyFileSync(require.resolve('electron/dist/electron.exe', { paths: [root] }), exe);
+// Nesta instalação local não há atualização automática (ela rodaria o instalador da nuvem, que o
+// Controle Inteligente bloqueia): sem o app-update.yml, o Vulpi não procura atualizações.
+fs.rmSync(path.join(dest, 'resources', 'app-update.yml'), { force: true });
 
 // Desinstalador: tira atalhos, registro e a pasta (as configurações em %APPDATA%\Vulpi ficam).
 fs.writeFileSync(path.join(dest, 'uninstall.cmd'), [

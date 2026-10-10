@@ -1,7 +1,7 @@
 {
   "name": "vulpi",
   "productName": "Vulpi",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Minimal desktop player for YouTube Music on Windows. Not affiliated with YouTube/Google.",
   "author": "syncbanned",
   "main": "src/main.js",
@@ -68,5 +68,8 @@
     "type": "git",
     "url": "https://github.com/syncbanned/vulpi.git"
   },
-  "homepage": "https://github.com/syncbanned/vulpi"
+  "homepage": "https://github.com/syncbanned/vulpi",
+  "dependencies": {
+    "electron-updater": "^6.3.9"
+  }
 }

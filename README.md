@@ -34,6 +34,7 @@ plays in the official player.
   AI keywords in the title, and artists you block. Hidden songs stay in your playlists.
 - **Discord**: shows "Listening to Vulpi" on your profile, like Spotify.
 - **Open with Windows** (from the tray), already minimized.
+- **Automatic updates**: new versions download in the background and install on restart.
 - English, Portuguese and German (follows Windows; switch in the avatar menu).
 
 ## Requirements
