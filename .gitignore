@@ -1,0 +1,13 @@
+node_modules/
+dist/
+*.log
+
+# Ferramentas locais de desenvolvimento (não fazem parte do app)
+graphify-out/
+/graft/
+.claude/
+.rtk/
+.vs/
+.ignore
+.mcp.json
+CLAUDE.md

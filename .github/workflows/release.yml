@@ -1,0 +1,45 @@
+# Gera o instalador do Windows na nuvem, testa e publica numa Release do GitHub.
+# Para lançar uma versão: mude "version" no package.json, faça commit, crie a tag "v" + versão
+# (no GitHub Desktop: History → botão direito no commit → Create Tag) e clique em "Push origin".
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm test
+
+      - name: Build installer
+        run: npx electron-builder --win nsis --publish never -c.win.signAndEditExecutable=true
+
+      # Teste: instala em silêncio, confere se o Vulpi.exe e o desinstalador existem, e desinstala.
+      - name: Test installer
+        shell: pwsh
+        run: |
+          $setup = Get-ChildItem dist -Filter 'Vulpi-Setup-*.exe' | Select-Object -First 1
+          Start-Process $setup.FullName -ArgumentList '/S' -Wait
+          $exe = Get-ChildItem "$env:LOCALAPPDATA\Programs" -Recurse -Filter 'Vulpi.exe' -ErrorAction SilentlyContinue | Select-Object -First 1
+          if (-not $exe) { throw 'Vulpi.exe não foi instalado' }
+          Write-Host "Instalado em $($exe.DirectoryName)"
+          $un = Get-ChildItem $exe.DirectoryName -Filter 'Uninstall*.exe' | Select-Object -First 1
+          if (-not $un) { throw 'Desinstalador não encontrado' }
+          Start-Process $un.FullName -ArgumentList '/S' -Wait
+
+      - name: Publish release
+        run: npx electron-builder --win nsis --publish always -c.win.signAndEditExecutable=true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

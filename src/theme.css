@@ -1,0 +1,191 @@
+/* Tema Vulpi para o music.youtube.com (cores do logo em assets/icon.png).
+   Primeiro trocamos as variáveis do próprio site; só depois mexemos em elementos.
+   Se o YouTube mudar o site, é aqui que se conserta. */
+
+:root, html[dark], ytmusic-app {
+  --vulpi-bg: #131211;
+  --vulpi-panel: #1c1a19;
+  --vulpi-panel-2: #262321;
+  --vulpi-border: #282523;
+  --vulpi-accent: #fd8f36;
+  --vulpi-accent-soft: rgba(253, 143, 54, 0.14);
+  --vulpi-text: #f2eeea;
+  --vulpi-text-2: #8f8a85;
+
+  --ytmusic-background: var(--vulpi-bg) !important;
+  --ytmusic-general-background-a: var(--vulpi-panel) !important;
+  --ytmusic-general-background-b: var(--vulpi-bg) !important;
+  --ytmusic-general-background-c: var(--vulpi-bg) !important;
+  --ytmusic-player-page-background: var(--vulpi-bg) !important;
+  --ytmusic-brand-background-solid: var(--vulpi-panel) !important;
+  --ytmusic-color-black1: var(--vulpi-panel) !important;
+  --ytmusic-color-black2: var(--vulpi-panel) !important;
+  --ytmusic-color-black4: var(--vulpi-bg) !important;
+  --yt-deprecated-general-background-a: var(--vulpi-panel) !important;
+  --yt-deprecated-general-background-b: var(--vulpi-bg) !important;
+  --yt-sys-color-baseline--base-background: var(--vulpi-bg) !important;
+  --yt-sys-color-baseline--raised-background: var(--vulpi-panel) !important;
+  --yt-sys-color-baseline--overlay-solid-background-inverse: var(--vulpi-bg) !important;
+  --paper-dialog-background-color: var(--vulpi-panel) !important;
+  --paper-menu-background-color: var(--vulpi-panel) !important;
+  --ytmusic-dropdown-item-hover-background: var(--vulpi-panel-2) !important;
+  --ytmusic-divider: var(--vulpi-border) !important;
+  --ytmusic-dropdown-border-color: var(--vulpi-border) !important;
+
+  --ytmusic-call-to-action: var(--vulpi-accent) !important;
+  --ytmusic-focus-active: var(--vulpi-accent) !important;
+  --ytmusic-setting-item-toggle-active: var(--vulpi-accent) !important;
+  --ytmusic-search-suggestion-focus-active: var(--vulpi-accent) !important;
+  --ytmusic-brand-link-text: var(--vulpi-accent) !important;
+  --ytmusic-playback-progress-color: var(--vulpi-accent) !important;
+  --ytmusic-play-pause-button-background: var(--vulpi-accent) !important;
+  --paper-slider-active-color: var(--vulpi-accent) !important;
+  --paper-slider-knob-color: var(--vulpi-accent) !important;
+  --paper-slider-knob-start-color: var(--vulpi-accent) !important;
+  --paper-slider-knob-start-border-color: var(--vulpi-accent) !important;
+}
+
+html, body, ytmusic-app {
+  background: var(--vulpi-bg) !important;
+}
+
+/* Tira o degradê colorido que o site põe atrás da tela inicial. */
+#background.immersive-background {
+  display: none !important;
+}
+ytmusic-browse-response .background-gradient {
+  background: none !important;
+}
+
+/* Barra de cima e barra lateral. */
+#nav-bar-background,
+ytmusic-nav-bar {
+  background: var(--vulpi-bg) !important;
+  border-bottom: none !important;
+}
+#guide-wrapper,
+#mini-guide-background,
+#guide-spacer,
+ytmusic-guide-renderer {
+  background: var(--vulpi-bg) !important;
+  border-right: 1px solid var(--vulpi-border) !important;
+}
+ytmusic-guide-entry-renderer tp-yt-paper-item {
+  border-radius: 12px !important;
+}
+ytmusic-guide-entry-renderer[active] tp-yt-paper-item {
+  background: var(--vulpi-panel-2) !important;
+}
+ytmusic-guide-entry-renderer[active] yt-icon {
+  color: var(--vulpi-accent) !important;
+}
+
+/* Busca. */
+ytmusic-search-box #input-box,
+ytmusic-search-box .search-box {
+  background: var(--vulpi-panel) !important;
+  border: 1px solid var(--vulpi-border) !important;
+  border-radius: 14px !important;
+}
+
+/* Chips (Relax, Foco...) e botões arredondados. */
+ytmusic-chip-cloud-chip-renderer a,
+ytmusic-chip-cloud-chip-renderer .gradient-box {
+  background: var(--vulpi-panel) !important;
+  border: 1px solid var(--vulpi-border) !important;
+  border-radius: 10px !important;
+}
+ytmusic-chip-cloud-chip-renderer[is-selected] a {
+  background: var(--vulpi-accent-soft) !important;
+  border-color: var(--vulpi-accent) !important;
+}
+
+/* Capas com cantos arredondados e sombra leve. */
+ytmusic-two-row-item-renderer .image-wrapper,
+ytmusic-two-row-item-renderer yt-img-shadow,
+ytmusic-two-row-item-renderer img,
+ytmusic-thumbnail-renderer,
+ytmusic-thumbnail-renderer img,
+ytmusic-responsive-list-item-renderer .left-items,
+ytmusic-responsive-list-item-renderer .thumbnail {
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+ytmusic-two-row-item-renderer .image-wrapper {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* Títulos das seções um pouco mais leves, como no mockup. */
+ytmusic-carousel-shelf-basic-header-renderer .title,
+ytmusic-carousel-shelf-basic-header-renderer h2 {
+  font-weight: 600 !important;
+  color: var(--vulpi-text) !important;
+}
+ytmusic-carousel-shelf-basic-header-renderer .strapline {
+  color: var(--vulpi-text-2) !important;
+  letter-spacing: 0.08em !important;
+}
+
+/* Player de baixo. */
+ytmusic-player-bar,
+#player-bar-background {
+  background: var(--vulpi-panel) !important;
+  border-top: 1px solid var(--vulpi-border) !important;
+}
+ytmusic-player-bar #play-pause-button {
+  background: var(--vulpi-accent) !important;
+  color: #fff !important;
+  border-radius: 50% !important;
+  --yt-icon-color: #fff !important;
+}
+ytmusic-player-bar #progress-bar {
+  --paper-slider-active-color: var(--vulpi-accent) !important;
+  --paper-slider-knob-color: var(--vulpi-accent) !important;
+  --paper-slider-container-color: var(--vulpi-border) !important;
+}
+ytmusic-player-bar .like-button-renderer [aria-pressed="true"] yt-icon {
+  color: var(--vulpi-accent) !important;
+}
+
+/* Menus e diálogos. */
+tp-yt-paper-listbox,
+ytmusic-menu-popup-renderer,
+tp-yt-paper-dialog {
+  background: var(--vulpi-panel) !important;
+  border: 1px solid var(--vulpi-border) !important;
+  border-radius: 12px !important;
+}
+
+/* Barra de rolagem fina. */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #2a2725; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #3a3633; }
+
+/* Com a interface do Vulpi montada (src/ui), o site fica escondido por baixo.
+   Os pop-ups do site (ex.: "Ainda está ouvindo?") continuam aparecendo por cima. */
+html.vulpi-ui ytmusic-app { visibility: hidden !important; }
+/* Troca de tema do Vulpi: o tema novo cresce em círculo (o JS anima o clip-path). */
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+::view-transition-old(root) { z-index: 1; }
+::view-transition-new(root) { z-index: 2; }
+/* O site tem os próprios nomes de transição; com ele escondido, só atrapalham. */
+html.vulpi-ui ytmusic-app, html.vulpi-ui ytmusic-app * { view-transition-name: none !important; }
+html.vulpi-ui, html.vulpi-ui body { overflow: hidden !important; }
+html.vulpi-ui ytmusic-popup-container,
+html.vulpi-ui tp-yt-iron-overlay-backdrop {
+  visibility: visible !important;
+  z-index: 3000 !important;
+}
+
+/* Tela de abertura (até a interface do Vulpi montar): fundo do tema e o logo respirando. */
+html.vulpi-boot { background: #131211 !important; }
+html.vulpi-boot.vulpi-boot-light { background: #faf8f6 !important; }
+html.vulpi-boot body { visibility: hidden !important; }
+html.vulpi-boot::after {
+  content: ''; position: fixed; left: 50%; top: 50%; width: 88px; height: 88px; margin: -44px 0 0 -44px;
+  background: var(--vulpi-logo) center / contain no-repeat;
+  animation: vulpi-breathe 1.6s ease-in-out infinite;
+}
+html.vulpi-boot.vulpi-boot-light::after { filter: brightness(.12); }
+@keyframes vulpi-breathe { 50% { opacity: .45; transform: scale(.94); } }

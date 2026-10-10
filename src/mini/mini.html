@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src https: data:; style-src 'self'">
+  <title>Vulpi mini</title>
+  <link rel="stylesheet" href="mini.css">
+</head>
+<body>
+  <div class="bg" id="bg"></div>
+  <img class="art" id="art" alt="">
+  <div class="meta">
+    <div class="t" id="title"></div>
+    <div class="s" id="artist">Vulpi</div>
+    <div class="bar"><div class="fill" id="fill"></div></div>
+  </div>
+  <div class="ctl">
+    <button id="prev" title="Anterior"><svg viewBox="0 0 24 24"><path d="M6 5v14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M19 5.8v12.4a.6.6 0 0 1-.9.5L9 12.5a.6.6 0 0 1 0-1L18.1 5.3a.6.6 0 0 1 .9.5z" fill="currentColor"/></svg></button>
+    <button id="play" class="main" title="Tocar/pausar"></button>
+    <button id="next" title="Próxima"><svg viewBox="0 0 24 24"><path d="M18 5v14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M5 5.8v12.4a.6.6 0 0 0 .9.5L15 12.5a.6.6 0 0 0 0-1L5.9 5.3a.6.6 0 0 0-.9.5z" fill="currentColor"/></svg></button>
+    <button id="like" title="Curtir"><svg viewBox="0 0 24 24"><path id="heart" d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></button>
+  </div>
+  <div class="win">
+    <button id="expand" title="Abrir o Vulpi"><svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-7 7M10 20H4v-6M4 20l7-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button id="close" title="Fechar mini player"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+  </div>
+  <script src="mini.js"></script>
+</body>
+</html>

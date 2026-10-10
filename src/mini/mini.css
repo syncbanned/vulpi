@@ -1,0 +1,48 @@
+/* Mini player: mesmas cores do Vulpi. */
+:root {
+  --bg: #161514; --panel: #1c1a19; --text: #f2eeea; --text-2: #8f8a85; --track: #2e2a27;
+  --accent: #fd8f36; --accent-2: #ffa55c; --on-accent: #1e1a17;
+}
+body.light {
+  --bg: #faf8f6; --panel: #efebe7; --text: #1e1a17; --text-2: #6c665f; --track: #e2dcd6;
+  --accent: #f07c1c; --accent-2: #e06c0c; --on-accent: #fff;
+}
+* { box-sizing: border-box; margin: 0; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  display: flex; align-items: center; gap: 12px; padding: 10px 12px;
+  background: var(--bg); color: var(--text);
+  font: 13px 'Inter', 'Segoe UI Variable Text', 'Segoe UI', system-ui, sans-serif;
+  -webkit-app-region: drag; user-select: none; position: relative;
+}
+.bg {
+  position: absolute; inset: -30px; z-index: -1; background-size: cover; background-position: center;
+  filter: blur(30px) saturate(1.2); opacity: .22;
+}
+.art { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; background: var(--panel); flex: none; }
+.meta { flex: 1; min-width: 0; }
+.t, .s { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.t { font-weight: 500; }
+.s { margin-top: 3px; color: var(--text-2); font-size: 12px; }
+.bar { margin-top: 9px; height: 3px; border-radius: 2px; background: var(--track); overflow: hidden; }
+.fill { height: 100%; background: var(--accent); }
+button {
+  -webkit-app-region: no-drag; border: 0; background: none; color: var(--text-2); cursor: pointer;
+  display: grid; place-items: center; padding: 0; transition: color .15s, transform .15s;
+}
+button:hover { color: var(--text); }
+button:active { transform: scale(.9); }
+button svg { width: 18px; height: 18px; }
+.ctl { display: flex; align-items: center; gap: 12px; }
+.ctl .main { width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: var(--on-accent); }
+.ctl .main:hover { background: var(--accent-2); color: var(--on-accent); }
+.ctl .main svg { width: 15px; height: 15px; }
+#like.on { color: var(--accent); }
+.win { position: absolute; top: 4px; right: 6px; display: flex; gap: 2px; opacity: 0; transition: opacity .2s; }
+body:hover .win { opacity: 1; }
+.win button svg { width: 13px; height: 13px; }
+body.idle .ctl, body.idle .bar { opacity: .4; pointer-events: none; }
+body.swap .art { animation: pop .45s cubic-bezier(.3, 1.4, .5, 1); }
+body.swap .meta { animation: rise .4s cubic-bezier(.2, .8, .2, 1); }
+@keyframes pop { from { transform: scale(.85); opacity: .4; } }
+@keyframes rise { from { transform: translateY(6px); opacity: 0; } }

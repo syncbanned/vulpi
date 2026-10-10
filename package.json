@@ -1,0 +1,71 @@
+{
+  "name": "vulpi",
+  "productName": "Vulpi",
+  "version": "1.0.0",
+  "description": "Minimal desktop player for YouTube Music on Windows. Not affiliated with YouTube/Google.",
+  "author": "syncbanned",
+  "main": "src/main.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "test": "node src/allow.test.js",
+    "icons": "electron scripts/make-icons.js",
+    "dist": "electron-builder --win dir",
+    "install-app": "node scripts/install.js"
+  },
+  "devDependencies": {
+    "electron": "^44.7.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.vulpi.app",
+    "productName": "Vulpi",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "!src/**/*.test.js",
+      "assets/**/*",
+      "!assets/logo-source.jpg",
+      "!assets/app-icon.png",
+      "!assets/logo-mark.png",
+      "package.json"
+    ],
+    "win": {
+      "target": "dir",
+      "icon": "assets/icon.ico",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Vulpi",
+      "runAfterFinish": true,
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico",
+      "installerHeaderIcon": "assets/icon.ico",
+      "uninstallDisplayName": "Vulpi",
+      "license": "LICENSE",
+      "multiLanguageInstaller": true,
+      "installerLanguages": [
+        "en_US",
+        "pt_BR"
+      ],
+      "deleteAppDataOnUninstall": false,
+      "artifactName": "Vulpi-Setup-${version}.${ext}"
+    },
+    "publish": {
+      "provider": "github",
+      "releaseType": "release"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/syncbanned/vulpi.git"
+  },
+  "homepage": "https://github.com/syncbanned/vulpi"
+}
