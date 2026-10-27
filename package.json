@@ -1,7 +1,7 @@
 {
   "name": "vulpi",
   "productName": "Vulpi",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Minimal desktop player for YouTube Music on Windows. Not affiliated with YouTube/Google.",
   "author": "syncbanned",
   "main": "src/main.js",

@@ -104,7 +104,8 @@ function activityFor(s, lang = 'en') {
   if (!s?.videoId || !s.playing) return null;
   const now = Date.now();
   const start = now - Math.round(s.time * 1000);
-  const cut = (t, n = 128) => (t && t.length > n ? t.slice(0, n - 1) + '…' : t || ' ');
+  // O Discord recusa textos com menos de 2 caracteres.
+  const cut = (t, n = 128) => (t && t.length > n ? t.slice(0, n - 1) + '…' : (t || '').padEnd(2, '⠀')); // espaço em branco que o Discord não apaga
   return {
     type: 2, // "Ouvindo"
     status_display_type: 2, // mostra o nome da música no lugar do nome do app, como o Spotify

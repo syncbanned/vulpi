@@ -1,5 +1,5 @@
 // Ponte com o player oficial do YouTube Music, que fica escondido atrás da nossa interface.
-// Tocar = pedir ao próprio site para abrir o item (resolveCommand). Nada de stream direto.
+// Tocar = pedir ao próprio site para abrir o item (resolveCommand ou yt-navigate). Nada de stream direto.
 
 const $yt = (sel) => document.querySelector(sel);
 const ytPlayer = () => document.getElementById('movie_player');
@@ -8,7 +8,10 @@ const ytBar = () => $yt('ytmusic-player-bar');
 // Às vezes o site carrega a música e fica parado (sem tocar); aí damos o play.
 function playEndpoint(endpoint) {
   if (!endpoint) return;
-  $yt('ytmusic-app')?.resolveCommand(endpoint);
+  const app = $yt('ytmusic-app');
+  // O site tirou o resolveCommand (out/2026); o evento yt-navigate é o que os cliques do próprio site usam.
+  if (typeof app?.resolveCommand === 'function') app.resolveCommand(endpoint);
+  else app?.dispatchEvent(new CustomEvent('yt-navigate', { bubbles: true, composed: true, detail: { endpoint } }));
   if (!endpoint.watchEndpoint && !endpoint.watchPlaylistEndpoint) return;
   let tries = 0;
   const timer = setInterval(() => {
